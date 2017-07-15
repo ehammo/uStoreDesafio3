@@ -18,6 +18,7 @@ import java.nio.file.Paths;
  */
 @Path("/upload")
 public class FileUploadService {
+    public final String UPLOAD_FOLDER = "C:/uploads/";
     /** The path to the folder where we want to store the uploaded files */
     public FileUploadService() {
     }
@@ -39,10 +40,7 @@ public class FileUploadService {
         if (uploadedInputStream == null || fileDetail == null)
             return Response.status(400).entity("Invalid form data").build();
         // create our destination folder, if it not exists
-        String UPLOAD_FOLDER="";
         try {
-            UPLOAD_FOLDER = getProjectPath();
-            System.out.println("myUploadFolder: "+UPLOAD_FOLDER);
             createFolderIfNotExists(UPLOAD_FOLDER);
         } catch (Exception se) {
             return Response.status(500)
@@ -50,6 +48,7 @@ public class FileUploadService {
                     .build();
         }
         String uploadedFileLocation = UPLOAD_FOLDER + fileDetail.getFileName();
+        System.out.println("myUploadFolder: "+uploadedFileLocation);
         try {
             saveToFile(uploadedInputStream, uploadedFileLocation);
         } catch (IOException e) {
@@ -94,9 +93,5 @@ public class FileUploadService {
         if (!theDir.exists()) {
             theDir.mkdir();
         }
-    }
-
-    private String getProjectPath() throws Exception{
-        return (Paths.get("uploads/")).toString();
     }
 }
