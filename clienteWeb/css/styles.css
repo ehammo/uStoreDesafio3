@@ -1,0 +1,36 @@
+.botao>.btn{
+    font-weight: bolder;
+    color: white;
+    background-color: #66b4f4;
+    padding-left: 18px;
+    padding-right: 18px;
+    margin: 20px;
+    box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.4);
+}
+
+.ui {
+    padding-right: 39px;
+    width: 100%;
+}
+
+label{
+    margin: 10px;
+    padding-left: 22px;
+}
+
+h2, h1 {
+    letter-spacing: -1px;
+    font-weight: 600;
+    text-decoration: none;
+    color: #000000 !important;
+    font-size: large;
+}
+
+body {
+    min-width: 960px;
+    font-size: 12pt;
+    line-height: 1.5em;
+    letter-spacing: 0.015em;
+    font-weight: 400;
+    color: #FFFFFF;
+}
