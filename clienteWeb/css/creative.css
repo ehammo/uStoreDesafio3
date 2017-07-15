@@ -8,6 +8,7 @@ body {
   height: 100%;
   width: 100%;
 }
+
 body {
   font-family: 'Merriweather', 'Helvetica Neue', Arial, sans-serif;
 }
@@ -173,9 +174,6 @@ header .header-content .header-content-inner h1 {
   font-size: 30px;
 }
 
-#filename{
-  text-align: center;
-}
 
 header .header-content .header-content-inner hr {
   margin: 30px auto;
@@ -394,6 +392,7 @@ fieldset[disabled] .btn-primary.active {
   border-radius: 300px;
   font-weight: 700;
   text-transform: uppercase;
+  
 }
 .btn-xl {
   padding: 15px 30px;
