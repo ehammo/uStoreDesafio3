@@ -37,12 +37,20 @@ public class FileUploadService {
             @FormDataParam("file") InputStream uploadedInputStream,
             @FormDataParam("file") FormDataContentDisposition fileDetail) {
         // check if all form parameters are provided
-        if (uploadedInputStream == null || fileDetail == null)
+        if (uploadedInputStream == null || fileDetail == null) {
+            System.out.println("erro1");
+            System.out.println("upload: "+uploadedInputStream.toString());
+            System.out.println("fileDetail: "+fileDetail);
             return Response.status(400).entity("Invalid form data").build();
+        }
         // create our destination folder, if it not exists
+
         try {
             createFolderIfNotExists(UPLOAD_FOLDER);
         } catch (Exception se) {
+            System.out.println("erro2");
+            System.out.println("upload: "+uploadedInputStream.toString());
+            System.out.println("fileDetail: "+fileDetail);
             return Response.status(500)
                     .entity("Can not create destination folder on server")
                     .build();
@@ -52,7 +60,10 @@ public class FileUploadService {
         try {
             saveToFile(uploadedInputStream, uploadedFileLocation);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("erro3");
+            System.out.println("upload: "+uploadedInputStream.toString());
+            System.out.println("fileDetail: "+fileDetail);
+            System.out.println(e.getMessage());
             return Response.status(500).entity("Can not save file").build();
         }
         return Response.status(200)
