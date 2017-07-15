@@ -1,3 +1,5 @@
+package uploadService;
+
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
 
@@ -9,6 +11,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.io.*;
+import java.nio.file.Paths;
 
 /**
  * Created by eduardo on 15/07/2017.
@@ -16,7 +19,6 @@ import java.io.*;
 @Path("/upload")
 public class FileUploadService {
     /** The path to the folder where we want to store the uploaded files */
-    private static final String UPLOAD_FOLDER = "c:/uploadedFiles/";
     public FileUploadService() {
     }
     @Context
@@ -37,9 +39,12 @@ public class FileUploadService {
         if (uploadedInputStream == null || fileDetail == null)
             return Response.status(400).entity("Invalid form data").build();
         // create our destination folder, if it not exists
+        String UPLOAD_FOLDER="";
         try {
+            UPLOAD_FOLDER = getProjectPath();
+            System.out.println("myUploadFolder: "+UPLOAD_FOLDER);
             createFolderIfNotExists(UPLOAD_FOLDER);
-        } catch (SecurityException se) {
+        } catch (Exception se) {
             return Response.status(500)
                     .entity("Can not create destination folder on server")
                     .build();
@@ -48,6 +53,7 @@ public class FileUploadService {
         try {
             saveToFile(uploadedInputStream, uploadedFileLocation);
         } catch (IOException e) {
+            e.printStackTrace();
             return Response.status(500).entity("Can not save file").build();
         }
         return Response.status(200)
@@ -66,6 +72,7 @@ public class FileUploadService {
         OutputStream out = null;
         int read = 0;
         byte[] bytes = new byte[1024];
+        System.out.println("trying to save: "+target);
         out = new FileOutputStream(new File(target));
         while ((read = inStream.read(bytes)) != -1) {
             out.write(bytes, 0, read);
@@ -87,5 +94,9 @@ public class FileUploadService {
         if (!theDir.exists()) {
             theDir.mkdir();
         }
+    }
+
+    private String getProjectPath() throws Exception{
+        return (Paths.get("uploads/")).toString();
     }
 }
